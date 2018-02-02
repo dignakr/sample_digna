@@ -1,0 +1,681 @@
+
+create table persons
+(
+PersonID int auto_increment,
+FirstName varchar(255),
+Address varchar(255),
+City varchar(255),
+Primary key(personID)
+);
+
+insert into persons(FirstName,Address,City)
+values('digna','feroke','calicut');
+
+insert into persons(FirstName,Address,City)
+values('abisha','vadakara','calicut');
+
+insert into persons(FirstName,Address,City)
+values('divya','westhill','calicut');
+
+insert into persons(FirstName,Address,City)
+values('noufan','palazhi','calicut');
+
+insert into persons(FirstName,Address,City)
+values('arya','beypore','kozhikode');
+
+insert into persons(FirstName,Address,City)
+values('aswini','university','kotayam');
+
+insert into persons(FirstName,Address,City)
+values('amrutha','kohinoor','malapuram');
+
+insert into persons(FirstName,Address,City)
+values('bhavya','pallikal','malapuram');
+
+
+insert into persons(FirstName,Address,City)
+values('muhsina','pallikal','kasargod');
+
+
+insert into persons(FirstName,Address,City)
+values('bindia','easthill','kozhikode');
+
+
+
+
+
+
+alter table persons add email varchar(60);
+alter table persons drop column email;
+alter table persons change FirstName FullName varchar(20);
+
+select PersonID,FirstName from persons;
+
+select * from persons where city="calicut";
+
+update persons set email='dinakr@gmail.com' where PersonID=1;
+
+
+update persons set email='abisha@gmail.com' where PersonID=2;
+update persons set email='divya@gmail.com' where PersonID=3;
+update persons set email='noufan@gmail.com' where PersonID=4;
+update persons set email='arya@gmail.com' where PersonID=5;
+update persons set email='aswini@gmail.com' where PersonID=6;
+update persons set email='amrutha@gmail.com' where PersonID=7;
+update persons set email='bavya@gmail.com' where PersonID=8;
+update persons set email='musina@gmail.com' where PersonID=9;
+update persons set email='bindia@gmail.com' where PersonID=10;
+
+delete from persons where FirstName='bindia' and city='kozhikode';
+
+drop table persons;
+
+
+
+ass3 :
+
+create table tbl_supplier
+(
+Pk_int_supplier_id int auto_increment,
+vchr_supplier_name varchar(25),
+
+Primary key(Pk_int_supplier_id)
+);
+
+
+ass4:
+
+
+alter table tbl_stock add fk_int_supplier int;
+
+alter table tbl_stock change int_price int_Price float ;
+
+
+ass5:
+create table tbl_stock
+(
+pk_int_stock_id int auto_increment,
+vchr_Name varchar(255),
+int_Quantity varchar(255),
+int_Price varchar(255),
+fk_int_supplier int,
+Primary key(pk_int_stock_id),
+Foreign key(fk_int_supplier) references tbl_supplier(Pk_int_supplier_id)
+);
+
+alter table tbl_stock add Foreign key(fk_int_supplier) references tbl_supplier
+(Pk_int_supplier_id);
+
+ass7 :
+
+create table tbl_dept
+(
+pk_int_dept_id int auto_increment primary key,
+vchr_dept_Name varchar(25)
+
+);
+
+create table tbl_classes
+(
+pk_int_class_id int auto_increment primary key,
+vchr_class_Name varchar(25),
+fk_int_dept_id int
+);
+alter table tbl_classes add Foreign key(fk_int_dept_id) references tbl_dept
+(pk_int_dept_id);
+
+
+ass8 :
+
+create table tbl_entrollment
+(
+pk_int_enrollment_id int auto_increment primary key,
+int_count int,
+fk_int_entrol_id int
+);
+alter table tbl_entrollment add Foreign key(fk_int_entrol_id) references tbl_classes
+(pk_int_class_id);
+
+
+ass9:
+
+alter table tbl_classes add unique(vchr_class_Name);
+
+ass10:
+
+alter table tbl_dept add vchr_dept_description varchar(20);
+
+ass 11:
+
+insert into tbl_supplier(vchr_supplier_name)
+values('logitech'),('Samsung'),('Iball'),('LG'),('Creative');
+
+dml ass1 :
+ 
+insert into tbl_stock(vchr_Name,int_Quantity,int_Price,fk_int_supplier)
+	values('mouse',10,500,1),
+	      ('keyboard',5,450,3),
+	      ('Modem',10,1200,2),
+	      ('Memory',100,1500,5),
+	      ('Headphone',50,750,4),
+	      ('Memory',2,3500,4);
+
+
+dml ass2 :
+
+update tbl_stock set int_price = int_price + 1.5 where pk_int_stock_id=1;
+update tbl_stock set int_price = int_price + 1.5 where pk_int_stock_id=2;
+update tbl_stock set int_price = int_price + 1.5 where pk_int_stock_id=3;
+update tbl_stock set int_price = int_price + 1.5 where pk_int_stock_id=4;
+update tbl_stock set int_price = int_price + 1.5 where pk_int_stock_id=5;
+update tbl_stock set int_price = int_price + 1.5 where pk_int_stock_id=6;
+
+
+sample question :
+
+create table tbl_example
+(
+pk_int_id int auto_increment primary key,
+int_product varchar(50),
+int_price int
+);
+
+insert into tbl_example(int_product,int_price)
+	values('Pen',10),('Book',15),('Eraser',2),('Pencil',6);
+alter table tbl_example change int_product int_product varchar(20);
+
+select avg(int_price) from tbl_example;
+select sum(int_price) from tbl_example;
+select min(int_price) from tbl_example;
+select max(int_price) from tbl_example;
+select count(int_price) from tbl_example;
+
+select ucase(int_product) from tbl_example;
+select lcase(int_product) from tbl_example;
+select round(int_price) from tbl_example;
+
+sample que employee :
+
+create table tbl_employee
+(
+Emp_id int auto_increment primary key,
+Emp_name varchar(50),
+Emp_age int,
+Emp_email varchar(30),
+int_salary int,
+varchar_place varchar(30)
+);
+
+insert into tbl_employee(Emp_name,Emp_age,Emp_email,int_salary,varchar_place)
+
+	values('Deepak',24,'dk@gmail.com',10000,'cochin'),
+	('Aneesh',23,'an@gmail.com',20000,'calicut'),
+	('Naveen',25,'nn@gmail.com',15000,'cochin'),
+	('Deepak',24,'dk@gmail.com',10000,'cochin'),
+	('Jacob',25,'jb@gmail.com',13000,'calicut');
+select varchar_place,avg(int_salary) from tbl_employee group by vchr_place;
+
+select varchar_place,avg(int_salary) from tbl_employee group by varchar_place having avg(int_salary)>12000;
+
+dml ass 3 :
+
+select * from tbl_stock where int_Price>1000;
+
+dml ass4:
+
+select * from tbl_stock order by vchr_Name asc;
+
+dml ass 6:
+
+select * from tbl_stock order by vchr_Name desc limit 3;
+
+dml ass 7:
+
+alter table tbl_stock add email varchar(60);
+select vchr_Name, int_Quantity, int_Price , int_Quantity*int_Price from tbl_stock group by pk_int_stock_id;
+
+dml ass 9:
+
+insert into tbl_dept(vchr_dept_Name,vchr_dept_description)
+
+	values('Computer Science','CS'),
+	('Electronics','EC'),
+	('Commerce','CC'),
+	('Arts','AR');
+
+dml ass 8 :
+
+delete from tbl_stock where pk_int_stock_id=4;
+
+
+sample progrm stored procedures :
+
+create table tbl_employee
+(
+Emp_id int auto_increment primary key,
+Emp_name varchar(50),
+Emp_age int,
+Emp_email varchar(30),
+int_salary int,
+varchar_place varchar(30)
+);
+
+delimiter //
+create procedure csp_getSalary(in id int)
+begin
+   select int_salary from tbl_employee where Emp_id =id;
+end //
+delimiter ;
+
+	call csp_getSalary(3);
+
+drop procedure csp_getSalary(in id int);
+
+
+delimiter //
+create procedure csp_getSalaryAtPlace(in place varchar(20), out total int)
+begin
+   select sum(int_salary) into total from tbl_employee where varchar_place =place ;
+end //
+delimiter ;
+	call csp_getSalaryAtPlace('calicut',@total);
+	select @total;
+
+stored procedures ass 1 :
+
+
+create table tbl_student
+(
+pk_int_roll_no int auto_increment primary key,
+int_entrollment_no int,
+vchr_name varchar(20),
+vchr_city varchar(20),
+vchr_mobileno varchar(15),
+dat_dob date,
+bln_status varchar(20)
+);
+
+insert into tbl_student values(null,123,'Digna','calicut','9746092816',now(),'done'),
+			      (null,321,'Divya','calicut','9746092816',now(),'done'),
+			       (null,458,'Abhisha','calicut','9746092816',now(),'done'),
+			     (null,985,'Noufan','vadakara','9746092816',now(),'done');
+
+stored procedures ass 2 :
+
+create table tbl_grade
+(
+fk_int_roll_no int,
+vchr_course varchar(20),
+vchr_grade char(1),
+Foreign key(fk_int_roll_no ) references tbl_student
+(pk_int_roll_no)
+);
+insert into tbl_grade values(1,'CS','A'),(2,'IT','B'),(1,'CS','C'),(1,'CS','D');
+update tbl_grade set fk_int_roll_no = 3 where vchr_grade = 'C';
+update tbl_grade set fk_int_roll_no = 4 where vchr_grade = 'D';
+
+
+stored procedures ass 3 :
+
+
+delimiter //
+create procedure csp_getStudentcount3(out total int)
+begin
+	declare i int;
+	set i = 1;
+	while i<= 10 do
+		insert into tbl_student		
+		values(null,,123,'john','calicut','9746092876','10-06-1992','commit');
+		set i= i+1;
+	end while;
+	select count(pk_int_roll_no) into  total from tbl_student;
+end //
+delimiter ;
+	call csp_getStudentcount3(@total);
+	select @total;
+
+
+stored procedures ass 4 :
+
+delimiter //
+drop procedure if exist csp_getGradcount3 //
+create procedure csp_getGradecount0(out total int)
+begin
+	declare i int;
+	set i = 1;
+	while i<= 10 do
+		insert into tbl_grade values(1,'btech','A');
+		set i= i+1;
+	end while;
+	select count(fk_int_roll_no) into  total from tbl_grade;
+end //
+delimiter ;
+	call csp_getGradecount0(@total);
+	select @total;
+
+
+stored procedures ass 5 :
+
+delimiter //
+drop procedure if exists csp_getStudentcount3 //
+create procedure csp_getStudentcount44(out total int)
+begin
+	
+	select count(pk_int_roll_no) into  total from tbl_student;
+end //
+delimiter ;
+	call csp_getStudentcount44(@total);
+	select @total;
+
+stored procedures ass 6 :
+
+delimiter //
+drop procedure if exists csp_getplace_course //
+create procedure csp_getplace_course(in course varchar(20),in place varchar(20))
+begin
+ select vchr_name,vchr_course,vchr_city 
+ from tbl_grade g
+ join tbl_student s on g.fk_int_roll_no = s.pk_int_roll_no where g.vchr_course=course and s.vchr_city = place;
+
+end //
+
+delimiter ;
+	call csp_getplace_course('CS','calicut');
+
+
+join ass 1:
+---------------
+
+
+create table tbl_student
+(
+enri_no int,
+Roll_no int primary key,
+name varchar(20),
+city varchar(20),
+mobile varchar(15),
+dob date
+
+);
+select enri_no as 'EnRI No',Roll_no as 'Roll No',name,city,mobile,dob from tbl_student;
+
+insert into tbl_student values(11,2,'Akhil','Delhi','98756977','1986-01-12'),
+
+			       (6,4,'Maya','Banglore','98756977','1987-11-12'),
+			       (1,8,'Anoop','Banglore','91756977','1990-12-22'),
+			      
+			       (20,1,'Paul','Cochin','91783977','1991-03-13'),
+  			       (3,5,'Sandeep','Delhi','917545875','1993-06-14');
+
+
+create table tbl_grade
+(
+Roll_No int,
+Course varchar(20),
+Grade char(1)
+);
+insert into tbl_grade values(2,'C','A'),(2,'Java','B'),(1,'C','B'),(1,'Java','A'),(4,'PHP','A'),(4,'Java','A'),(4,'C','B'),(8,'Java','B'),(5,'PHP','A'),(5,'Java','D');
+
+select Roll_No as 'Roll No' ,Course,Grade from tbl_grade;
+
+select name,Course,Grade from tbl_grade g join tbl_student s on g.Roll_No = s.Roll_no where g.Grade = 'A';
+
+
+join ass 2:
+--------------
+select name,Course,Grade from tbl_grade g join tbl_student s on g.Roll_No = s.Roll_no where g.Grade = 'B';
+
+
+join ass3 :
+--------------
+ 
+
+SELECT s.name,s.Roll_No,count(g.Course)as course_count FROM tbl_student s JOIN tbl_grade g ON s.Roll_No=g.Roll_No GROUP BY s.name,g.Roll_No;
+
+join ass 4 :
+--------------
+select name , Course, city from tbl_grade g join tbl_student s on g.Roll_No = s.Roll_no where g.Course = 'Java' and s.city='Banglore';
+
+
+join ass 5 :
+--------------
+select Course,name from tbl_grade g join tbl_student s on g.Roll_No = s.Roll_no where name like "A%";
+	
+
+join ass 6 :
+--------------
+select name,date_format(from_days(datediff(tbl_student.dob,'1986-01-12')),'%y')+0 as age from tbl_grade g join tbl_student s on g.Roll_No = s.Roll_no;
+
+select dateiff(tbl_student.dob,'1990-12-22')/365.25 as age from tbl_student;
+
+select name,dob ,round(datediff(now(),s.dob)/365) as Age from tbl_student s;
+
+join ass 7 :
+---------------
+
+
+sample prgrm user defined functions :
+
+delimiter //
+create function fun_getDay(x datetime)returns varchar (15)
+begin
+	declare dayname varchar(15) default 'HOLIDAY';
+	if(weekday(x)<5) then
+		set dayname = 'WORKING DAY';
+	END IF;
+	return dayname;
+end //
+delimiter ;
+
+select fun_getDay(now());
+
+
+sample program cursors :
+-------------------------
+
+delimiter //
+create procedure changePlace1()
+begin
+	declare empid int;
+	declare placeid varchar(50);
+	declare done int default 0;
+	declare myCur cursor for select Emp_id,varchar_place from tbl_employee;
+	declare continue handler for not found set done=1;
+	open myCur ;
+		emp_loop : loop
+		fetch myCur into empid,placeid;
+			select empid,placeid;
+		if done =1 then
+			leave emp_loop;
+			else iterate emp_loop;
+		end if;
+		end loop emp_loop;
+	close myCur ;
+end //
+delimiter ;
+
+call changePlace1();
+
+
+
+JOIN ASS 7 :
+---------------
+SELECT name, date_format(dob,"%d-%b-%y") as 'date of birth' from tbl_students;
+
+
+dcl ass1 :
+------------
+flush privileges;  (in the user - root)
+drop user 'john';
+create user 'john'@'localhost' identified by '1234';		[use this query in user -root ]
+grant select on my_db.tbl_employee to 'john'@'localhost';		""    ""  ""
+									""     ""  ""
+select * from tbl_employee;(in the user - john)
+
+
+dcl ass 2 :
+-------------
+revoke select on my_db.tbl_employee from 'john'@'localhost';		[use this query in user -root ]
+grant select,update on my_db.tbl_employee to 'john'@'localhost';		""    ""  ""
+										""     ""  ""
+update tbl_employee set Emp_email = 'dignakr@gmail.com' where Emp_id = 1;(in the user - john)
+
+
+tcl ass 1 :
+-------------
+
+create table tbl_balance_sheet
+(
+pk_int_balance_sheet_no int auto_increment primary key,
+fk_int_ppr_id int,
+int_balance_to_be_recieved int,
+vchr_Payment_status varchar(100),
+Foreign key(fk_int_ppr_id ) references tbl_project_payment_record
+(pk_int_project_no)
+);
+
+create table tbl_project_payment_record
+(
+pk_int_project_no int auto_increment primary key
+
+);
+
+
+tcl ass 2 :
+-----------------
+
+
+
+udf, views ass 1 :
+---------------------
+
+create table tbl_category
+(
+pk_int_category_id int auto_increment primary key,
+vchr_category_name varchar(100)
+);
+insert into tbl_category values(null,'project_name');
+
+
+udf, views ass 2 :
+---------------------
+create table tbl_projects
+(
+fk_int_category_id int,
+pk_int_project_id int auto_increment primary key,
+vchr_project_name varchar(100),
+vchr_project_description varchar(100),
+bln_project_status tinyint(4),
+int_project_cost int(11),
+dat_proj_start_date date,
+vchr_lead_name varchar(100),
+Foreign key(fk_int_category_id) references tbl_category
+(pk_int_category_id)
+);
+
+
+udf, views ass 3 :
+---------------------
+create table tbl_project_album
+(
+pk_int_album_id int auto_increment primary key,
+fk_int_project_id int,
+vchr_album_name varchar(100),
+vchr_album_description varchar(100),
+Foreign key(fk_int_project_id) references tbl_projects
+(pk_int_project_id)
+);
+
+
+udf, views ass 4 :
+---------------------
+
+create table tbl_picture
+(
+fk_int_album_id int,
+pk_int_pictures_id int auto_increment primary key,
+vchr_picture_name varchar(100),
+vchr_picture_description varchar(200),
+vchr_picture_path varchar(200),
+Foreign key(fk_int_album_id) references tbl_project_album
+(pk_int_album_id)
+);
+
+create table tbl_project_payment_record1
+(
+pk_int_ppr_id int auto_increment primary key,
+fk_int_project_id int,
+int_paid_amount int,
+dat_of_payment date,
+Foreign key(fk_int_project_id) references tbl_projects
+(pk_int_project_id)
+);
+
+
+udf, views ass 6 :
+---------------------
+create table tbl_projects
+(
+fk_int_category_id int,
+pk_int_project_id int auto_increment primary key,
+vchr_project_name varchar(100),
+vchr_project_description varchar(100),
+bln_project_status tinyint(4),
+int_project_cost int(11),
+dat_proj_start_date date,
+vchr_lead_name varchar(100),
+Foreign key(fk_int_category_id) references tbl_category
+(pk_int_category_id)
+);
+
+insert into tbl_projects values(1,null,'facebook_html','completed',5,100000,'2017-06-15','Divya');
+
+delimiter //
+	create function fun_getprojectname(id int)returns varchar(20)
+	begin
+	declare name varchar(20);
+		select vchr_project_name into name from tbl_projects where pk_int_project_id = id;
+		return name;
+	end //
+delimiter ;
+select fun_getprojectname(1);
+
+
+
+udf, views ass 7 :
+---------------------
+
+create index student_index on tbl_student(name,city,district);
+
+
+udf, views ass 8 :
+--------------------
+create table tbl_teachers
+(
+
+pk_int_teacher_id int auto_increment primary key,
+vchr_teacher_name varchar(50),
+vchr_teacher_place varchar(50),
+dob date
+
+);
+create index teacher_index on tbl_teachers(vchr_teacher_name,vchr_teacher_place,dob);
+
+udf, views ass 9 :
+--------------------
+alter table tbl_student add index student_index(dob);
+
+
+udf, views ass 10 :
+--------------------
+
+create table tbl_department
+(
+
+pk_int_dept_id int auto_increment primary key,
+vchr_dept_name varchar(50)
+
+);
+
+create unique index department_index on tbl_department(pk_int_dept_id,vchr_dept_name);
+

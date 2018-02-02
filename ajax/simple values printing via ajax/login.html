@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+</head>
+<style>
+	#maindiv
+	{
+		background-color: white
+	}
+	.login
+	{
+		height: 350px;
+		width: 600px;
+		background-color:#1EC0B6;
+		margin-left: 340px;
+		margin-top: 160px;
+		padding-left: 100px;
+		padding-top: 15px;
+
+	}	
+	#txt_username,#password
+	{
+		border-radius: 7px; 
+		width: 300px;
+		height: 20px;
+	}
+	.btn_login,.btn_create_account
+	{
+		font-family: arial; 
+		color: red;
+	}
+
+</style>
+
+<script>
+		function validate_form()
+		{
+
+			var username=document.getElementById("txt_username_id").value;
+			var password=document.getElementById("password_id").value;
+				if(username=="" && password=="")
+				{
+					// alert(" Username and password can not be empty");
+					document.getElementById("lbl_user_pwd").innerHTML="Username and password can not be empty";
+					return false;
+				}
+				
+				document.getElementById("lbl_user_pwd").innerHTML=null;
+
+				var username1=document.getElementById("txt_username_id").value;
+				if(username1=="")
+				{
+						// alert(" Username and password can not be empty");
+						document.getElementById("lbl_username").innerHTML="Enter your username";
+						return false;
+				}
+				document.getElementById("lbl_username").innerHTML=null;
+
+				var password1=document.getElementById("password_id").value;
+				if(password1=="")
+				{
+					document.getElementById("lbl_password").innerHTML="Enter password";
+					return false;
+				}
+				document.getElementById("lbl_password").innerHTML=null;
+			// 	document.getElementById("username").innerHTML=null;
+			// 	document.getElementById("password").innerHTML=null;
+			// alert("hello");
+		}
+
+</script>
+
+<!--- - - - - - - - - - - - - - - - -  AJAX FUNCTIONS -  -  - - - - - - -  -->
+<!-- <script src="{% static 'js/jquery.min.js' %}"></script> -->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript">
+
+	//For getting CSRF token
+	
+	
+	$(document).ready(function(){
+
+		//get csrf token from cookie
+
+		function getCookie(name) {
+	      var cookieValue = null;
+	      if (document.cookie && document.cookie != '') {
+	            var cookies = document.cookie.split(';');
+		      for (var i = 0; i < cookies.length; i++) {
+		           var cookie = jQuery.trim(cookies[i]);
+
+		      // Does this cookie string begin with the name we want?
+
+		      if (cookie.substring(0, name.length + 1) == (name + '=')) {
+		        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		          break;
+		         }
+		      }
+	      }
+		 return cookieValue;
+		}
+
+		$("#id_btn_login").click(function(e) {
+
+			//Prevent default submit. 
+
+			 e.preventDefault();
+
+			//Prepare csrf token
+
+			 var csrftoken = getCookie('csrftoken');
+
+			//Collect data from fields
+
+			var username=$("#txt_username_id").val();
+			var password=$("#password_id").val();
+
+			 
+			 alert
+
+			//Send data 
+ 
+			 $.ajax({
+			       url : "http://127.0.0.1:8000/register/login/",
+			       type : "POST", // http method
+			       data : { csrfmiddlewaretoken : csrftoken, 
+			       email : username,
+			       password : password
+			 }, // data sent with the post request
+
+			 // handle a successful response
+
+			 success : function(json) {
+			 console.log(json); // another sanity check
+
+			 $("#message").html('Hi   '+json['email']  + '  You have entered password:'+ json['password'])
+			 },
+
+			 // handle a non-successful response
+			 error : function(xhr,errmsg,err) {
+			 console.log(xhr.status + ": " + xhr.responseText); // 
+			 }
+			 });
+			});
+
+
+		
+	});
+	</script>
+
+
+<body>
+	<div id="maindiv">
+	<form id="f1" method="POST">
+	<!-- <form id="f1" action="login/" method="POST"> -->
+    {% csrf_token %}
+		<div class="login">
+			<h1>
+				<font color="white">Login</font>
+			</h1>
+        	
+        		<b>
+        			<font color="white">User ID :<br>
+                		<input type="email" name="txt_username" id="txt_username_id"></b><font color="red"><label id="lbl_username"></label><br></font><br><b>
+                		Password :
+                	</font>
+                </b><br>
+                <input type="password" name="password" id="password_id" maxlength="10">
+                <font color="red"><label id="lbl_password"></label>
+                </font>
+                <br><br><font color="red"><label id="lbl_user_pwd"></label>{{pwd_error}}
+                </font><br>
+                <br>
+                <input type="submit" class="btn_login" value="Log In" id="id_btn_login" onClick="return validate_form()">&emsp;
+                </form><br>
+
+                <p id="message">hello</p><br>
+
+
+                <form id="f2" action="register/user_create_account/" method="POST">
+            	{% csrf_token %}
+                <input type="submit" class="btn_create_account" value="Create New Account" id="btn_create_account">
+            </form>
+            <br>
+        </div>
+    </div>       
+</body>
+</html>

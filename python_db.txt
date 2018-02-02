@@ -1,0 +1,137 @@
+
+***********------- Django orm documentation --------*************(search for further details)
+
+
+if we make any changes to the model------then go to command prompt------and type:python manage.py makemigrations
+										 python manage.py migrate(to save changes) 
+
+
+insert into facebook_login1 values(null,'digna','digna123'),
+				(null,'divya','divya123'),
+				(null,'abhi','abhi123');
+
+insert into baabtra_reg_language1 values(null,'Malayalam'),
+					(null,'English'),
+					(null,'Hindi');					
+
+
+
+baabtra_reg  : 
+-------------------------
+
+select distinct r.id, r.name,r.gender,r.branch,l.lang from baabtra_reg_registration1 r 
+	JOIN baabtra_reg_language_mapping m ON m.fk_reg_id=r.id 
+
+	JOIN baabtra_reg_language1 l ON l.id=m.fk_lan_id order by r.id;
+
+select l.lang from  baabtra_reg_language1 l JOIN baabtra_reg_language_mapping m 
+	ON  l.id=m.fk_lan_id;
+
+
+ORM :
+----------
+
+user=registration1.objects.get(id=fk_id1)
+lan=language_mapping.objects.filter(fk_reg=fk_id1).select_related()
+
+print(lan.query)-----used to print qwery from the table
+
+****************************************************************************************************
+print languages.query------(in baabtra regitration)
+SELECT 
+`baabtra_reg_language_mapping`.`id`, 
+`baabtra_reg_language_mapping`.`fk_reg_id`, 
+`baabtra_reg_language_mapping`.`fk_lan_id`, 
+`baabtra_reg_registration1`.`id`, 
+`baabtra_reg_registration1`.`name`, 
+`baabtra_reg_registration1`.`gender`,
+`baabtra_reg_registration1`.`branch`, 
+`baabtra_reg_language1`.`id`, 
+`baabtra_reg_language1`.`lang` 
+FROM `baabtra_reg_language_mapping` INNER JOIN `baabtra_reg_registration1` 
+ON (`baabtra_reg_language_mapping`.`fk_reg_id` = `baabtra_reg_registration1`.`id`) 
+INNER JOIN `baabtra_reg_language1` ON (`baabtra_reg_language_mapping`.`fk_lan_id` = `baabtra_reg_language1`.`id`) 
+WHERE `baabtra_reg_language_mapping`.`fk_reg_id` = 19
+
+
+print languages.query------(in baabtra regitration)
+SELECT  baabtra_reg_language_mapping.id, 
+	baabtra_reg_language_mapping.fk_reg_id, 
+	baabtra_reg_language_mapping.fk_lan_id,
+	baabtra_reg_registration1.id, 
+	baabtra_reg_registration1.name,
+	baabtra_reg_registration1.gender,
+	baabtra_reg_registration1.branch,
+	baabtra_reg_language1.id,
+	baabtra_reg_language1.lang
+ FROM 	baabtra_reg_language_mapping INNER JOIN baabtra_reg_registration1
+ ON 	(baabtra_reg_language_mapping.fk_reg_id = baabtra_reg_registration1.id) 
+INNER JOIN baabtra_reg_language1 ON (baabtra_reg_language_mapping.fk_lan_id = baabtra_reg_language1.id)
+WHERE baabtra_reg_language_mapping.fk_reg_id = 69;
+
+SELECT baabtra_reg_language_mapping.id, 
+	baabtra_reg_language_mapping.fk_reg_id, 
+	baabtra_reg_language_mapping.fk_lan_id 
+FROM baabtra_reg_language_mapping 
+WHERE baabtra_reg_language_mapping.fk_reg_id = 28
+
+*******************************************************************************************
+
+
+
+
+
+SELECT registration_user_details.id,
+	registration_user_details.user_fk_key_id,
+	registration_user_details.chr_fname,	
+	registration_user_details.chr_lname, 
+	registration_user_details.chr_gender, 
+	registration_user_details.dob, 
+	registration_user_details.chr_address, 
+	registration_login_reg.id,
+	registration_login_reg.login_username,
+	registration_login_reg.login_password 
+FROM registration_user_details INNER JOIN registration_login_reg 
+ON (registration_user_details.user_fk_key_id = registration_login_reg.id) 
+WHERE registration_user_details.id IS NULL
+
+
+SELECT registration_user_details.id, 
+	registration_user_details.user_fk_key_id, 
+	registration_user_details.chr_fname, 
+	registration_user_details.chr_lname,
+	registration_user_details.chr_gender, 
+	registration_user_details.dob, 
+	registration_user_details.chr_address
+ FROM   registration_user_details
+ WHERE registration_user_details.user_fk_key_id = 18
+
+SELECT registration_user_details.id, 
+	registration_user_details.user_fk_key_id, 
+	registration_user_details.chr_fname, 
+	registration_user_details.chr_lname, 
+	registration_user_details.chr_gender, 
+	registration_user_details.dob, 
+	registration_user_details.chr_address, 
+	registration_login_reg.id,
+	registration_login_reg.login_username, 
+	registration_login_reg.login_password 
+FROM 	registration_user_details 
+INNER JOIN registration_login_reg 
+ON (registration_user_details.user_fk_key_id = registration_login_reg.id) 
+WHERE registration_user_details.user_fk_key_id = 18;
+
+
+print(obj_details.query)
+SELECT registration_user_details.id,	
+	registration_user_details.user_fk_key_id,
+	registration_user_details.chr_fname,
+	registration_user_details.chr_lname, 
+	registration_user_details.chr_gender, 	registration_user_details.dob,
+	registration_user_details.chr_address,	
+	registration_login_reg.id,
+	registration_login_reg.login_username,
+	registration_login_reg.login_password 
+FROM registration_user_details 
+INNER JOIN registration_login_reg 
+ON (registration_user_details.user_fk_key_id = registration_login_reg.id)

@@ -1,0 +1,77 @@
+{% load static %}
+<html>
+<head>
+	<title></title>
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script type="text/javascript">
+	//For getting CSRF token
+	
+	
+	$(document).ready(function(){
+		//get csrf token from cookie
+		function getCookie(name) {
+	      var cookieValue = null;
+	      if (document.cookie && document.cookie != '') {
+	            var cookies = document.cookie.split(';');
+		      for (var i = 0; i < cookies.length; i++) {
+		           var cookie = jQuery.trim(cookies[i]);
+		      // Does this cookie string begin with the name we want?
+		      if (cookie.substring(0, name.length + 1) == (name + '=')) {
+		        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		          break;
+		         }
+		      }
+	      }
+		 return cookieValue;
+		}
+
+		$("#submit").click(function(e) {
+
+			//Prevent default submit. 
+			 e.preventDefault();
+
+			//Prepare csrf token
+			 var csrftoken = getCookie('csrftoken');
+
+			//Collect data from fields
+			 var email = $('#txt_username').val();
+			 var password = $('#txt_password').val();
+			 alert
+			//Send data  
+			 $.ajax({
+			       url : "http://127.0.0.1:8000/myapp/test_ajx/",
+			       type : "POST", // http method
+			       data : { csrfmiddlewaretoken : csrftoken, 
+			       email : email,
+			       password : password
+			 }, // data sent with the post request
+
+			 // handle a successful response
+			 success : function(json) {
+			 console.log(json); // another sanity check
+			 $("#message").html('Hi   '+json['email']  + '  You have entered password:'+ json['password'])
+			 },
+
+			 // handle a non-successful response
+			 error : function(xhr,errmsg,err) {
+			 console.log(xhr.status + ": " + xhr.responseText); // 
+			 }
+			 });
+			});
+
+
+		
+	});
+	</script>
+</head>
+<body align="center">
+<h2> Login form</h2>
+<form name="frm_login" method="POST">
+Username <input type="text" name ="txt_username" id ="txt_username"><br><br>
+Password <input type="password" name ="txt_password" id ="txt_password"><br><br>
+<input type="submit" value="login" id="submit">
+</form>
+<p id="message">hello</p>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+HTML 
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script>
+  //For getting CSRF token
+  
+  
+  $(document).ready(function(){
+    //get csrf token from cookie
+    alert("doc ready");
+    function getCookie(name) {
+       var cookieValue = null;
+       if (document.cookie && document.cookie != '') {
+             var cookies = document.cookie.split(';');
+         for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+         // Does this cookie string begin with the name we want?
+         if (cookie.substring(0, name.length + 1) == (name + '=')) {
+           cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+             break;
+            }
+         }
+       }
+    return cookieValue;
+    }
+
+  //   $("#id_bt_login").click(function(e) {
+  //     //Prevent default submit. 
+  //     e.preventDefault();
+  //     //Prepare csrf token
+  //     var csrftoken = getCookie('csrftoken');
+  //     //Collect data from fields
+  //     var email = $('#txt_username_id').val();
+  //     var password = $('#txt_password_id').val();
+  //     alert
+  //     //Send data  
+  //     $.ajax({
+  //           url : "http://127.0.0.1:8000/registration/registration/login/",
+  //           type : "POST", // http method
+  //           data : { csrfmiddlewaretoken : csrftoken, 
+  //           email : email,
+  //           password : password
+  //     }, // data sent with the post request
+  //     // handle a successful response
+  //     success : function(json) {
+  //     console.log(json); // another sanity check
+  //     // $("#message").html('Hi   '+json['email']  + '  You have entered password:'+ json['password'])
+  //     // },
+  //     $("#message").html(json['email'])
+  //     $("#message1").html(json['password'])
+  //     },        
+
+  //     // handle a non-successful response
+  //     error : function(xhr,errmsg,err) {
+  //     console.log(xhr.status + ": " + xhr.responseText); // 
+  //     }
+  //     });
+  //     });    
+  // });
+
+
+    $("#id_bt_login").click(function(e){
+        e.preventDefault();
+        var csrftoken = getCookie('csrftoken');
+        alert("button clikcked");
+        $.ajax({
+          
+            url: "http://127.0.0.1:8000/registration/registration/login/",
+            data: {
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+            },
+            dataType: "json",
+            success: function(data){
+              alert("in success function")
+              console.log(data);
+              alert(data.length);
+              data = $.parseJSON(data);
+              $.each(data, function(i, item) {
+                  row="<tr><td>"+ item.login_User_Id +" </td><td>"+item.login_Password+"</td></tr>";
+                  alert(item.login_User_Id);
+                  $("#showDetails").append(row);
+              });
+                
+            },
+            
+                error : function(xhr,errmsg,err) {
+                  console.log(xhr.status + ": " + xhr.responseText);
+            }
+        });
+    });
+});
+   </script>

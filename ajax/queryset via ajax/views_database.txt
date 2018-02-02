@@ -1,0 +1,6 @@
+VIEW
+--------------
+
+data=json.dumps([dict(item) for item in tbl_login.objects.all().values('id', 'login_Password','login_User_Id')],cls=DjangoJSONEncoder)
+
+    return JsonResponse(data,safe=False)

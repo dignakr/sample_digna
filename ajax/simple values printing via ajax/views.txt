@@ -1,0 +1,48 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+from django.http import HttpResponse,Http404,HttpResponseRedirect
+import json
+from django.http import JsonResponse
+from django.template import loader
+from django.template import Template
+from django.shortcuts import render 
+from models import tbl_user_details,tbl_login
+from django.core.serializers.json import DjangoJSONEncoder
+
+
+
+
+# Create your views here.
+def index(request):
+    template=loader.get_template('login.html')
+    context={"title":"Add Task"}
+    return HttpResponse(template.render(context,request))
+
+def login(request):
+	username=request.POST.get('email')
+	password=request.POST.get('password')
+
+	
+	# ------------------------------------------------------------------------------------------
+	try:
+		obj_login=tbl_login.objects.get(login_username=username)
+		print obj_login.login_username
+		print obj_login.login_password
+
+
+		if(obj_login.login_username==username and obj_login.login_password==password):
+			template=loader.get_template('login.html')
+			context={}
+			return JsonResponse({'email':username,'password':password})
+		else:
+			template=loader.get_template('login.html')
+			context={"pwd_error":"Invalid Username or Password"}
+			return JsonResponse({'email':username,'password':password})
+	except Exception, e:
+			
+			template=loader.get_template('login.html')
+			context={}
+			print("******This is error*******")
+			print e
+
+	return JsonResponse()
